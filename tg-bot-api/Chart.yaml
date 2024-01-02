@@ -1,5 +1,5 @@
 apiVersion: v2
-name: telegram-bot-api
+name: tg-bot-api
 description: Telegram api server
 
 # A chart can be either an 'application' or a 'library' chart.
