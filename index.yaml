@@ -3,12 +3,22 @@ entries:
   tg-bot-api:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-01-02T18:56:08.482287+01:00"
+    created: "2024-01-02T19:12:02.674092+01:00"
+    description: Telegram api server
+    digest: ea706c469807b765c8a96c388e8b211b025e1dc57ef3b8f3c32a0fc2e0714a69
+    name: tg-bot-api
+    type: application
+    urls:
+    - https://kazhuravlev.github.io/helm-telegram-api-server/packages/tg-bot-api-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-01-02T19:12:02.673909+01:00"
     description: Telegram api server
     digest: 31c8b2b2572cb475dd9852480046820f60486e8217f3e7004637272882ad556c
     name: tg-bot-api
     type: application
     urls:
-    - https://kazhuravlev.github.io/helm-tg-bot-api/packages/tg-bot-api-1.0.3.tgz
+    - https://kazhuravlev.github.io/helm-telegram-api-server/packages/tg-bot-api-1.0.3.tgz
     version: 1.0.3
-generated: "2024-01-02T18:56:08.480675+01:00"
+generated: "2024-01-02T19:12:02.672329+01:00"
