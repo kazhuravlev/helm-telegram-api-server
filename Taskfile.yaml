@@ -1,0 +1,15 @@
+version: "3"
+
+silent: true
+
+vars:
+  PROJECT_NAME: tg-bot-api
+
+tasks:
+  check:
+    desc: Check that all operations was done
+    cmds:
+      - helm package charts/tg-bot-api -d ./packages/
+      - git add ./packages
+      - helm repo index --url https://kazhuravlev.github.io/helm-telegram-api-server .
+
