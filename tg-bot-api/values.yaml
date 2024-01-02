@@ -1,0 +1,40 @@
+replicaCount: 1
+
+telegram:
+  api_id: "PUT_SOME_API_ID_HERE"
+  api_hash: "PUT_SOME_API_HASH_HERE"
+  files_dir: "/data/files"
+  api_port: 8000
+  files_port: 8001
+
+caddy:
+  image:
+    tag: "2.7"
+
+image:
+  repository: kazhuravlev/telegram-bot-api
+  pullPolicy: IfNotPresent
+  # Default value - Chart.appVersion.
+  tag: ""
+
+
+imagePullSecrets: [ ]
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: { }
+podLabels: { }
+service:
+  type: ClusterIP
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

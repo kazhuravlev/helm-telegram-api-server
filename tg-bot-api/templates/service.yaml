@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tg-bot-api.fullname" . }}
+  labels:
+    {{- include "tg-bot-api.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.telegram.api_port }}
+      targetPort: api
+      protocol: TCP
+      name: api
+    - port: {{ .Values.telegram.fs_port }}
+      targetPort: files
+      protocol: TCP
+      name: files
+  selector:
+    {{- include "tg-bot-api.selectorLabels" . | nindent 4 }}
+

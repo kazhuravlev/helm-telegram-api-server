@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tg-bot-api.fullname" . }}
+  labels:
+    {{- include "tg-bot-api.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "tg-bot-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "tg-bot-api.labels" . | nindent 8 }}
+	{{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-caddy
+          image: "caddy:{{ .Values.caddy.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          command: [
+            "caddy",
+            "file-server",
+            "--root", "{{ .Values.telegram.files_dir }}",
+            "--listen", ":{{ .Values.telegram.files_port }}"
+          ]
+          ports:
+            - name: files
+              containerPort: {{ .Values.telegram.files_port }}
+              protocol: TCP
+          volumeMounts:
+            - name: files-storage
+              mountPath: "{{ .Values.telegram.files_dir }}"
+        - name: {{ .Chart.Name }}-bot-api
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [
+            "telegram-bot-api",
+            "--local",
+            "--api-id", "{{ .Values.telegram.api_id}}",
+            "--api-hash", "{{ .Values.telegram.api_hash }}",
+            "--http-port", "{{ .Values.telegram.api_port }}",
+            "--dir", "{{ .Values.telegram.files_dir }}"
+          ]
+          ports:
+            - name: api
+              containerPort: {{ .Values.telegram.api_port }}
+              protocol: TCP
+          volumeMounts:
+            - name: files-storage
+              mountPath: "{{ .Values.telegram.files_dir }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: files-storage
+          emptyDir: {}
+
