@@ -12,7 +12,7 @@ caddy:
     tag: "2.7"
 
 image:
-  repository: kazhuravlev/telegram-bot-api
+  repository: kazhuravlev/telegram-api-server
   pullPolicy: IfNotPresent
   # Default value - Chart.appVersion.
   tag: ""
